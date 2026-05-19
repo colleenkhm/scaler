@@ -1,9 +1,23 @@
+import { useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
+import { playNote } from '../utils/synth';
 
 const WHITE_W = 90;
 const WHITE_H = 260;
 const BLACK_W = 56;
 const BLACK_H = 162;
+const OCTAVE = 3;
+
+// Standard virtual piano keyboard mapping
+const KEY_MAP = {
+  a: 'C', w: 'C#', s: 'D', e: 'D#', d: 'E',
+  f: 'F', t: 'F#', g: 'G', y: 'G#', h: 'A', u: 'A#', j: 'B',
+};
+
+// Reverse: note → keyboard key label for display
+const NOTE_KEY = Object.fromEntries(
+  Object.entries(KEY_MAP).map(([k, v]) => [v, k.toUpperCase()])
+);
 
 const OCTAVE_PATTERN = [
   { note: 'C',  type: 'white', whiteIndex: 0 },
@@ -20,7 +34,7 @@ const OCTAVE_PATTERN = [
   { note: 'B',  type: 'white', whiteIndex: 6 },
 ];
 
-function buildKeys(numOctaves = 2, startOctave = 3) {
+function buildKeys(numOctaves = 1, startOctave = OCTAVE) {
   const white = [];
   const black = [];
 
@@ -33,7 +47,6 @@ function buildKeys(numOctaves = 2, startOctave = 3) {
         key.showLabel = note === 'C';
         white.push(key);
       } else {
-        // Center the black key over the boundary between the two white keys
         key.left = octaveOffset + (afterWhite + 1) * WHITE_W - BLACK_W / 2;
         black.push(key);
       }
@@ -46,6 +59,38 @@ const { white: WHITE_KEYS, black: BLACK_KEYS } = buildKeys(1);
 const TOTAL_WIDTH = 7 * WHITE_W;
 
 export default function Piano({ selectedNotes, onNoteClick, disabled }) {
+  const pressedKeys = useRef(new Set());
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      const note = KEY_MAP[e.key.toLowerCase()];
+      if (!note || pressedKeys.current.has(e.key)) return;
+
+      pressedKeys.current.add(e.key);
+      playNote(note, OCTAVE);
+      onNoteClick(note);
+    };
+
+    const handleKeyUp = (e) => pressedKeys.current.delete(e.key);
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [onNoteClick]);
+
+  const handleClick = (note) => {
+    if (disabled) return;
+    playNote(note, OCTAVE);
+    onNoteClick(note);
+  };
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', my: 1 }}>
       <Box
@@ -62,7 +107,7 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
           return (
             <Box
               key={`${key.note}${key.octave}`}
-              onClick={() => !disabled && onNoteClick(key.note)}
+              onClick={() => handleClick(key.note)}
               sx={{
                 position: 'absolute',
                 left: key.left,
@@ -74,8 +119,10 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
                 borderRadius: '0 0 6px 6px',
                 cursor: disabled ? 'default' : 'pointer',
                 display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                pt: 1,
                 pb: 0.75,
                 boxShadow: selected
                   ? 'inset 0 -3px 0 #a78bfa'
@@ -86,6 +133,9 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
                 },
               }}
             >
+              <Typography sx={{ fontSize: '11px', color: '#c4b5fd', lineHeight: 1, fontWeight: 600 }}>
+                {NOTE_KEY[key.note]}
+              </Typography>
               <Typography
                 sx={{
                   fontSize: '13px',
@@ -94,7 +144,7 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
                   lineHeight: 1,
                 }}
               >
-                {key.showLabel ? `${key.note}${key.octave}` : key.note}
+                {key.note}
               </Typography>
             </Box>
           );
@@ -105,7 +155,7 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
           return (
             <Box
               key={`${key.note}${key.octave}`}
-              onClick={() => !disabled && onNoteClick(key.note)}
+              onClick={() => handleClick(key.note)}
               sx={{
                 position: 'absolute',
                 left: key.left,
@@ -117,8 +167,10 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
                 cursor: disabled ? 'default' : 'pointer',
                 zIndex: 2,
                 display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                pt: 0.75,
                 pb: 0.75,
                 boxShadow: selected
                   ? '0 0 0 2px #c4b5fd'
@@ -129,6 +181,9 @@ export default function Piano({ selectedNotes, onNoteClick, disabled }) {
                 },
               }}
             >
+              <Typography sx={{ fontSize: '9px', color: '#a78bfa', lineHeight: 1, fontWeight: 600 }}>
+                {NOTE_KEY[key.note]}
+              </Typography>
               <Typography
                 sx={{
                   fontSize: '10px',
