@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Scaler
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A browser-based tool for identifying what musical key a song might be in. Click up to 7 notes on the piano keyboard and Scaler will suggest the most likely keys, ranked by how well your notes fit each scale.
 
-## Available Scripts
+**[Live demo](https://rose-etta.github.io/scaler/)**
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## How it works
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Select notes by clicking the piano keys or using your keyboard. Scaler checks your selection against all 84 possible keys (12 roots × 7 modes) and scores each one by the percentage of your selected notes that belong to it. Results are ranked from best to worst match.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Modes checked
 
-### `npm test`
+| Mode | Character |
+|------|-----------|
+| Major (Ionian) | Bright, resolved |
+| Natural Minor (Aeolian) | Dark, melancholic |
+| Dorian | Minor with a raised 6th — jazzy, soulful |
+| Phrygian | Minor with a flat 2nd — tense, flamenco |
+| Lydian | Major with a raised 4th — dreamy, floating |
+| Mixolydian | Major with a flat 7th — bluesy, rock |
+| Locrian | Diminished feel — rare, unstable |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Tips for best results
 
-### `npm run build`
+- **3–4 notes** is usually enough to narrow it down significantly
+- If multiple keys show 100%, keep adding notes to distinguish between them
+- Notes that appear in the "Outside this key" line are chromatic — they might be passing tones, borrowed chords, or a sign you're in a different key
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Keyboard shortcuts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+White keys and black keys are mapped to your keyboard in the standard virtual piano layout:
 
-### `npm run eject`
+```
+Keyboard:  A  W  S  E  D  F  T  G  Y  H  U  J
+Note:      C  C# D  D# E  F  F# G  G# A  A# B
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Press the same key again to deselect a note.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm install
+npm start
+```
 
-## Learn More
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Other commands
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run build    # production build
+npm run deploy   # deploy to GitHub Pages
+npm test         # run tests
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Stack
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [React 19](https://react.dev/)
+- [MUI v9](https://mui.com/) — Grid, LinearProgress, Chip, Button
+- [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) — synthesized piano sound, no audio files required
+- CSS Modules for component styles
+- Deployed via GitHub Pages

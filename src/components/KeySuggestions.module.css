@@ -1,0 +1,172 @@
+/* Empty state */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 0;
+  gap: 8px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  color: #c4b5fd;
+  line-height: 1;
+}
+
+.emptyTitle {
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.emptySubtitle {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.headerHint {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.perfectHint {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 12px;
+}
+
+.overflowHint {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* Cards */
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #ede8f5;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: box-shadow 0.2s;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.card[data-tier='perfect'] {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+.card[data-tier='high'] {
+  background-color: #f5f3ff;
+  border-color: #c4b5fd;
+}
+
+.card[data-tier='medium'] {
+  background-color: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.cardTitle {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rankBadge[data-rank='1'] { background-color: #bbf7d0; color: #15803d; }
+.rankBadge[data-rank='2'] { background-color: #ddd6fe; color: #5b21b6; }
+.rankBadge[data-rank='3'] { background-color: #fed7aa; color: #c2410c; }
+
+/* Score bar */
+
+.scoreBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.scoreLabel {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Card metadata */
+
+.cardMeta {
+  display: block;
+  margin-top: 4px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.scaleNotes {
+  display: block;
+  margin-top: 6px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.missingNotes {
+  display: block;
+  margin-top: 8px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: #e11d48;
+}
