@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { playNote } from '../utils/synth';
-import styles from './Piano.module.css';
+import styles from './Piano.css';
 
 const WHITE_W = 90;
 const WHITE_H = 260;
