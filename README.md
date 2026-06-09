@@ -2,7 +2,7 @@
 
 A browser-based tool for identifying what musical key a song might be in. Click up to 7 notes on the piano keyboard and Scaler will suggest the most likely keys, ranked by how well your notes fit each scale.
 
-**[Live demo](https://rose-etta.github.io/scaler/)**
+**[Live demo](https://colleenkhm.github.io/scaler/)**
 
 ---
 
