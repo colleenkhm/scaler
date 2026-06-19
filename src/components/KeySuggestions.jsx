@@ -1,5 +1,5 @@
 import { Grid, LinearProgress } from '@mui/material';
-import styles from './KeySuggestions.css';
+import styles from './KeySuggestions.module.css';
 
 function scoreTier(score) {
   if (score === 1)   return 'perfect';
